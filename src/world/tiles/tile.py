@@ -1,4 +1,9 @@
-class Tile:
+import pygame
+
+from src.constants.gameconstants import TILEWIDTH
+from src.constants.gameconstants import TILEHEIGHT
+
+class Tile(pygame.sprite.Sprite):
     @property
     def passable(self):
         return self._passable
@@ -17,8 +22,11 @@ class Tile:
 
     @sprite.setter
     def sprite(self, nsprite):
-        self._sprite = nsprite
+        if type(nsprite) == type("string"):
+            self._sprite = pygame.image.load(nsprite)
+        else: self._sprite = nsprite
 
     def __init__(self, passable = True):
+        pygame.sprite.Sprite.__init__(self)
         self._passable = passable
-
+        self._sprite = pygame.Surface((TILEWIDTH, TILEHEIGHT))

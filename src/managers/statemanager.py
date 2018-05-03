@@ -14,9 +14,10 @@ class StateManager:
     def currentState(self, newState):
         self.switch_states(newState)
 
-    def __init__(self, entryState):
+    def __init__(self, entryState, renderbuffer):
+        self.renderBuffer = renderbuffer
         self._currentState = entryState
-        self._currentState.start()
+        self._currentState.start(self.renderBuffer)
 
     def __str__(self):
         return str(type(self._currentState))
@@ -29,7 +30,7 @@ class StateManager:
         :return: None
         """
         self._currentState = newState
-        self._currentState.start()
+        self._currentState.start(self.renderBuffer)
 
     def check_for_state(self, checkState):
         """

@@ -8,8 +8,9 @@ from src.states.basestate import BaseState
 from src.world.world import World
 
 class PlayState(BaseState):
-    def start(self):
+    def start(self, renderbuffer):
         self.world = World(WORLDWIDTH, WORLDHEIGHT)
+        self.renderbuffer = renderbuffer
 
     def update(self):
         for event in pygame.event.get():
@@ -17,4 +18,4 @@ class PlayState(BaseState):
                 return True
 
     def draw(self):
-        pygame.display.flip()
+        self.world.draw(self.renderbuffer)

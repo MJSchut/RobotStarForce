@@ -8,6 +8,8 @@ from src.constants.displayconstants import SCREEN_WIDTH
 from src.constants.displayconstants import SCREEN_HEIGHT
 
 from src.managers.statemanager import StateManager
+from src.managers.dirmanager import DirManager
+
 from src.states.playstate import PlayState
 
 class GameManager:
@@ -23,7 +25,7 @@ class GameManager:
 
     def __init__(self):
         print ("Game manager started")
-        
+
         self._initialize_pygame()
         self._initialize_global_variables()
         self._start_game_loop()
@@ -39,7 +41,7 @@ class GameManager:
 
     def _initialize_global_variables(self):
         print("Initializing global variables...")
-        self.stateManager = StateManager(PlayState())
+        self.stateManager = StateManager(PlayState(), self.render_buffer)
         print("\t ...initialized.")
 
     def _start_game_loop(self):
@@ -48,6 +50,9 @@ class GameManager:
         while self.stateManager.currentState is not None:
             self.stateManager.currentState.draw()
             gameended = self.stateManager.currentState.update()
+
+            self.screen.blit(self.render_buffer, (0,0))
+            pygame.display.update()
 
             if gameended:
                 break
